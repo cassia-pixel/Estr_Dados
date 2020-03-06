@@ -23,7 +23,7 @@ public:
   
 private:
   vector<int> S;
-
+  
   int pai(int i);
   int esquerdo(int i);
   int direito(int i);
@@ -55,20 +55,20 @@ int main(void)
   printf("h3:\n");
   h3.escreve();
 
-  Heap h4 = h2; // construtor de cópia padrão
+  Heap h4 = h2; // construtor de cópia padrão     //h4 = h2 é igual a h3(h2), pois é no momento da declaracao
   h2.insere(40);
   printf("h4:\n");
   h4.escreve();
   
   h = h2; // operador de atribuição, sem constructor ou constructor de cópia
-  h.insere(100);
+  h.insere(100);    //h = h2 nao é construcao
   printf("h2:\n");
   h2.escreve();
   printf("h:\n");
   h.escreve();
 
   h = Heap(5, v); // construtor Heap(int n, int dados[]), seguido de atribuição (de cópia, não transferência (move))
-  printf("h:\n");
+  printf("h:\n");   //guardando uma nova heap
   h.escreve();
   
   return 0;
@@ -198,25 +198,21 @@ void Heap::troca(int i, int j) {
 
 void Heap::desce(int i) {
 
+    int n = S.size();
     int esq, dir, maior; 
     esq = esquerdo(i); 
     dir = direito(i); 
-    int n = S.size();
 
-    if(S[esq] > S[dir]) {
-        maior = esq; 
-        if(S[maior] > S[(i - 1) / 2])
-            troca(S[maior], S[(i - 1) / 2]);
+    if(S[esq] > S[dir])
+        maior = esq;
+    else 
+      maior = dir;
+
+    if(S[maior] > S[i] && maior < n) {
+      troca(S[maior], S[i]);
+      desce((i+1)/2);
     }
-    else {
-        maior = dir; 
-        if(S[maior] > S[(i - 1) / 2] && maior < n)
-            troca(S[maior], S[(i - 1) / 2]); 
-        else 
-            desce(i);
-    }
-
-
+  }
 }
 
 void Heap::sobe(int i) {
@@ -232,16 +228,26 @@ void Heap::insere(int p) {
 }
 
 int Heap::consulta_maxima() {
-  //TODO: implementar
-
+  return S[0];
 }
 
 int Heap::extrai_maxima() {
-  //TODO: implementar
+    int n = S.size();
+    int maior;
 
+    if(n > 0) {
+      maior = S[0];
+      S[0] = S[n - 1];
+      n = n - 1;
+      desce(0);
+      return maior;
+    }
+
+    return INT_MIN;
+    
 }
 
 void Heap::altera_prioridade(int i, int p) {
-  //TODO: implementar
+    //sobe ou desce 
 
 }
