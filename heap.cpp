@@ -11,7 +11,7 @@ class Heap
 {
 public:
   Heap();
-  Heap(int n, int dados[])
+  Heap(int n, int dados[]);
   ~Heap();      //destrutor 
   void escreve_niveis();
   void escreve(const string& prefixo = "", int i = 0);
@@ -141,7 +141,9 @@ Heap::Heap() {
 
 Heap::Heap(int n, int dados[]) :
   S(dados, dados + n) {
-  //TODO: implementar (constroi_max_heap)
+    if(n  > 0) {
+      desce(0);
+    }
 
 }
 
@@ -202,17 +204,17 @@ void Heap::desce(int i) {
     int esq, dir, maior; 
     esq = esquerdo(i); 
     dir = direito(i); 
-
-    if(S[esq] > S[dir])
-        maior = esq;
-    else 
-      maior = dir;
-
-    if(S[maior] > S[i] && maior < n) {
-      troca(S[maior], S[i]);
-      desce((i+1)/2);
+  
+    if(S[esq] > S[dir]) {
+      maior = esq;
     }
-  }
+    else {
+      maior = dir;
+    }
+    if(S[maior] > S[i] && n > 0) {
+      troca(maior,i);
+      desce(maior);
+    }
 }
 
 void Heap::sobe(int i) {
