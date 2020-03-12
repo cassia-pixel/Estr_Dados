@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
     FILE arqEntrada;
 
     arqEntrada = argv[0];   //pegando o arquivo de entrada 
-    fscanf(arq_entrada[i], "%20[A-Za-zÀ-ú]%*[^A-Za-zÀ-ú]", comparar);   //ver como se faz a leitura em arquivo 
+    fscanf(arq_entrada, "%20[A-Za-zÀ-ú]%*[^A-Za-zÀ-ú]", comparar);   //ver como se faz a leitura em arquivo 
     tolower(comparar);  //colocando as letras em minusculo
     
 }
